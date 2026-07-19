@@ -121,3 +121,27 @@
         height: 200px;
     }
 }
+
+/* =====================================
+   FOOTER RESPONSIVE
+===================================== */
+
+@media (max-width:768px){
+
+    .footer-inner{
+
+        flex-direction:column;
+
+        gap:40px;
+
+        text-align:center;
+
+    }
+
+    .footer-right{
+
+        align-items:center;
+
+    }
+
+}

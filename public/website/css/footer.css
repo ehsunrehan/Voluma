@@ -1,26 +1,93 @@
-.site-footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 0;
+/* =========================================
+   FOOTER
+========================================= */
+
+.site-footer{
+
+    margin-top:100px;
+
+    border-top:1px solid var(--border);
+
+    background:rgba(255,255,255,.02);
+
 }
 
-.footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--text-secondary);
-    font-size: 14px;
+.footer-inner{
+
+    padding:70px 0 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:80px;
+
 }
 
-.footer-brand {
-    font-family: var(--font-heading);
-    font-size: 20px;
-    font-weight: 700;
+.footer-left{
+
+    max-width:460px;
+
 }
 
-.footer-brand span:first-child {
-    color: var(--coral);
+.footer-logo{
+
+    font-size:30px;
+
+    margin-bottom:18px;
+
 }
 
-.footer-brand span:last-child {
-    color: var(--cyan);
+.footer-logo span{
+
+    color:var(--coral);
+
+}
+
+.footer-left p{
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+}
+
+.footer-right{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.footer-right a{
+
+    color:var(--text-secondary);
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.footer-right a:hover{
+
+    color:white;
+
+}
+
+.footer-bottom{
+
+    border-top:1px solid var(--border);
+
+    padding:24px 0;
+
+    text-align:center;
+
+    color:var(--text-secondary);
+
+    font-size:14px;
+
 }
