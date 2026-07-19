@@ -6,62 +6,155 @@
 
 @guest
 
+
+
+
 <!-- HERO -->
 <section class="hero">
+
     <div class="container">
+
         <div class="hero-grid">
-            <!-- Left -->
+
+            <!-- LEFT -->
+
             <div class="hero-content">
-                <span class="hero-tag">
-                    <span class="dot"></span>
-                    AI-Powered 3D Generation
+
+                <span class="hero-badge">
+
+                    IMAGE → 3D AI PIPELINE
+
                 </span>
+
                 <h1 class="hero-title">
-                    Turn any photo<br>
-                    into a <span class="highlight-coral">3D model</span>
+
+                    Create Stunning
+
+                    <span>3D Models</span>
+
+                    From a Single Image.
+
                 </h1>
-                <p class="hero-desc">
-                    Upload a single image. Our AI removes the background and creates
-                    a fully interactive 3D model you can view, rotate, and download.
+
+                <p class="hero-description">
+
+                    Upload any product photo and let Voluma automatically remove
+                    the background, generate a professional 3D model, preview it
+                    in your browser and download it as a GLB file.
+
                 </p>
-                <div class="hero-actions">
-                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
-                        Get Started — 50 Credits
+
+                <div class="hero-buttons">
+
+                    <a href="{{ route('register') }}" class="btn btn-primary">
+
+                        Start Creating
+
                     </a>
-                    <a href="#features" class="btn btn-ghost btn-lg">
-                        Learn More
+
+                    <a href="#features" class="btn btn-secondary">
+
+                        How It Works
+
                     </a>
+
                 </div>
-                <div class="hero-stats">
-                    <span class="hero-stat">
-                        <span class="icon">⚡</span> 10 credits/model
-                    </span>
-                    <span class="hero-stat">
-                        <span class="icon">🎯</span> 5 models free
-                    </span>
-                    <span class="hero-stat">
-                        <span class="icon">🔄</span> No card required
-                    </span>
+
+                <div class="hero-features">
+
+                    <span>PNG / JPG</span>
+
+                    <span>remove.bg</span>
+
+                    <span>Tripo AI</span>
+
+                    <span>GLB Export</span>
+
                 </div>
+
             </div>
 
-            <!-- Right -->
-            <div class="hero-visual">
-                <div class="hero-object">
-                    <div class="object-glow"></div>
-                    <div class="object-icon">
-                        <span class="red-offset">🍔</span>
-                        <span>🍔</span>
-                        <span class="cyan-offset">🍔</span>
+            <!-- RIGHT -->
+
+            <div class="hero-preview">
+
+                <div class="pipeline-card">
+
+                    <div class="pipeline-item">
+
+                        <div class="pipeline-icon"></div>
+
+                        <div>
+
+                            <h4>Upload Image</h4>
+
+                            <p>Select any product photo</p>
+
+                        </div>
+
                     </div>
-                    <span class="object-label">
-                        <strong>3D</strong> · interactive · downloadable
-                    </span>
+
+                    <div class="pipeline-line"></div>
+
+                    <div class="pipeline-item">
+
+                        <div class="pipeline-icon coral"></div>
+
+                        <div>
+
+                            <h4>Background Removed</h4>
+
+                            <p>Powered by remove.bg</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="pipeline-line"></div>
+
+                    <div class="pipeline-item">
+
+                        <div class="pipeline-icon cyan"></div>
+
+                        <div>
+
+                            <h4>Generate 3D Model</h4>
+
+                            <p>Processed with Tripo AI</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="pipeline-line"></div>
+
+                    <div class="pipeline-item">
+
+                        <div class="pipeline-icon success"></div>
+
+                        <div>
+
+                            <h4>Download GLB</h4>
+
+                            <p>Ready for games & AR</p>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </section>
+
+
+
+
 
 <!-- FEATURES (Simple Grid) -->
 <section id="features" style="padding:80px 0; border-top:1px solid var(--border);">
