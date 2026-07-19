@@ -498,3 +498,85 @@ CREDITS
     line-height:1.7;
 
 }
+
+#previewImage{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    border-radius:16px;
+
+}
+
+
+
+/* ==========================
+UPLOAD PREVIEW
+========================== */
+
+#previewState{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+#uploadedPreview{
+
+    width:100%;
+
+    height:320px;
+
+    object-fit:contain;
+
+    border-radius:18px;
+
+    background:#0F172A;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.image-info{
+
+    text-align:left;
+
+}
+
+.image-info h4{
+
+    margin-bottom:6px;
+
+    font-size:17px;
+
+    word-break:break-all;
+
+}
+
+.image-info span{
+
+    color:var(--muted);
+
+    font-size:14px;
+
+}
+
+.preview-buttons{
+
+    display:flex;
+
+    gap:14px;
+
+}
+
+.preview-buttons .btn{
+
+    flex:1;
+
+}

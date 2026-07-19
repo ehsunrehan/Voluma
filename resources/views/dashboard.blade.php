@@ -31,43 +31,92 @@
                 </div>
 
                 <div class="upload-area" id="uploadArea">
-                    <input
-                    type="file"
-                    id="imageInput"
-                    hidden
-                    accept="image/*">
-                    <div class="upload-icon">
 
-                        📷
+    <!-- Upload State -->
 
-                    </div>
+    <div id="uploadState">
 
-                    <h3>
+        <div class="upload-icon">
 
-                        Drag & Drop Your Image
+            📷
 
-                    </h3>
+        </div>
 
-                    <p>
+        <h3>
 
-                        or click below to browse
+            Drag & Drop Your Image
 
-                    </p>
+        </h3>
 
-                    <button class="btn btn-primary" id="browseBtn">
+        <p>
 
-                        Browse Image
+            or click below to browse
 
-                    </button>
+        </p>
 
-                    <input
-                        type="file"
-                        id="fileInput"
-                        accept="image/*"
-                        hidden
-                    >
+        <button
+            class="btn btn-primary"
+            id="browseBtn">
 
-                </div>
+            Browse Image
+
+        </button>
+
+    </div>
+
+<input
+  type="file"
+  id="fileInput"
+  accept="image/*"
+  hidden
+>
+
+    <!-- Preview State -->
+
+    <div
+        id="previewState"
+        style="display:none;">
+
+        <img
+            id="uploadedPreview"
+            src=""
+            alt="Preview">
+
+        <div class="image-info">
+
+            <h4 id="imageName">
+
+            </h4>
+
+            <span id="imageSize">
+
+            </span>
+
+        </div>
+
+        <div class="preview-buttons">
+
+            <button
+                class="btn btn-secondary"
+                id="replaceBtn">
+
+                Re-upload
+
+            </button>
+
+            <button
+                class="btn btn-primary"
+                id="generateBtn">
+
+                Generate 3D
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
             </div>
 
@@ -93,11 +142,18 @@
 
                 <div class="viewer-area">
 
-                    <div class="viewer-placeholder">
+                    <div class="viewer-placeholder" id="viewerPlaceholder">
 
                         3D Preview
 
                     </div>
+
+                    <img
+                    id="previewImage"
+                    src=""
+                    alt="Preview"
+                    style="display:none;"
+                    >
 
                 </div>
 
@@ -119,13 +175,13 @@
 
                 <div class="dashboard-actions">
 
-                    <button class="btn btn-secondary" disabled>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>
 
                         Download
 
                     </button>
 
-                    <button class="btn btn-primary" disabled>
+                    <button id="renewBtn" class="btn btn-primary" disabled>
 
                         Renew
 

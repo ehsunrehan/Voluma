@@ -30,4 +30,25 @@ class GenerationController extends Controller
     ]);
 }
 
+public function generate(Request $request)
+{
+
+    $request->validate([
+
+        'image_path' => 'required'
+
+    ]);
+
+    return response()->json([
+
+        'success' => true,
+
+        'step' => 'background-removal',
+
+        'message' => 'Starting AI pipeline...'
+
+    ]);
+
+}
+
 }

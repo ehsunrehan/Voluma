@@ -22,6 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         [GenerationController::class,'store']
     )->name('generate.store');
 
+    Route::post('/generate/model',
+        [GenerationController::class,'generate']
+    )->name('generate.model');
 });
 
 
