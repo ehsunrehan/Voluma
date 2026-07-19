@@ -1,0 +1,153 @@
+/* ===== DASHBOARD ===== */
+.dashboard {
+    padding: 60px 0 100px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+}
+
+.dashboard-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    transition: all .3s;
+}
+
+.dashboard-card:hover {
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-glow);
+}
+
+.card-header {
+    margin-bottom: 24px;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.card-desc {
+    color: var(--text-secondary);
+    font-size: 15px;
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 48px 24px;
+    text-align: center;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: var(--coral);
+    background: var(--coral-soft);
+}
+
+.upload-area .icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.upload-area h3 {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.upload-area p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+/* Viewer */
+.viewer-area {
+    background: var(--bg-primary);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.viewer-placeholder {
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.viewer-placeholder .icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.viewer-placeholder p {
+    font-size: 15px;
+}
+
+/* Status */
+.status-box {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.status-box .label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 4px;
+}
+
+.status-box .value {
+    font-size: 15px;
+}
+
+.status-box .value.success {
+    color: var(--cyan);
+}
+
+.status-box .value.error {
+    color: var(--coral);
+}
+
+.status-box .value.loading {
+    color: var(--text-white);
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+}
+
+/* Actions */
+.dashboard-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.dashboard-actions .btn {
+    width: 100%;
+    justify-content: center;
+}
