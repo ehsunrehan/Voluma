@@ -10,10 +10,34 @@
             </a>
 
             <ul class="nav-links">
-                <li><a href="#how">How It Works</a></li>
-                <li><a href="#examples">Examples</a></li>
-                <li><a href="#credits">Credits</a></li>
-            </ul>
+
+    @guest
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+    @endguest
+
+    @auth
+        <li>
+            <a href="{{ route('dashboard') }}">
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('history') }}">
+                Gallery
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('history') }}">
+                History
+            </a>
+        </li>
+    @endauth
+
+</ul>
 
             <div class="nav-actions">
                 @guest
@@ -23,10 +47,10 @@
 
                 @auth
                     <span class="credits-badge">
-                        <span class="credits-icon">⚡</span>
                         {{ Auth::user()->credits ?? 50 }}
+                        Credits
                     </span>
-                    <a href="{{ route('dashboard') }}" class="btn btn-ghost">Dashboard</a>
+
                     <div class="user-dropdown" id="userDropdown">
                         <button class="user-btn">
                             {{ Auth::user()->name }}
@@ -35,15 +59,46 @@
                             </svg>
                         </button>
                         <ul class="dropdown-menu" id="dropdownMenu">
-                            <li><a href="{{ route('profile') }}">Profile</a></li>
-                            <li><a href="{{ route('history') }}">History</a></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-logout">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
+
+    <li>
+        <a href="{{ route('dashboard') }}">
+            Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ route('history') }}">
+            Gallery
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ route('profile') }}">
+            Profile
+        </a>
+    </li>
+
+    <li>
+        <hr>
+    </li>
+
+    <li>
+
+        <form method="POST" action="{{ route('logout') }}">
+
+            @csrf
+
+            <button type="submit" class="dropdown-logout">
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </li>
+
+</ul>
                     </div>
                 @endauth
             </div>
