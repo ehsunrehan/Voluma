@@ -12,9 +12,23 @@
             <ul class="nav-links">
 
     @guest
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#pricing">Pricing</a></li>
+                <li>
+            <a href="#how" class="nav-pill">
+                How It Works
+            </a>
+        </li>
+
+        <li>
+            <a href="#examples" class="nav-pill">
+                Examples
+            </a>
+        </li>
+
+        <li>
+            <a href="#credits" class="nav-pill">
+                Credits
+            </a>
+        </li>
     @endguest
 
     @auth

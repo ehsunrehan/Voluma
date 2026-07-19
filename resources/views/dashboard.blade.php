@@ -31,7 +31,11 @@
                 </div>
 
                 <div class="upload-area" id="uploadArea">
-
+                    <input
+                    type="file"
+                    id="imageInput"
+                    hidden
+                    accept="image/*">
                     <div class="upload-icon">
 
                         📷
@@ -136,5 +140,294 @@
     </div>
 
 </section>
+
+
+
+
+<section id="how" class="how-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                FLAT IN, DIMENSIONAL OUT
+            </span>
+
+            <h2>
+                From a plain photo to something
+                <br>
+                you can rotate.
+            </h2>
+
+        </div>
+
+        <div class="how-grid">
+
+            <div class="how-card">
+
+                <span class="how-label">
+                    Your photo
+                </span>
+
+                <div class="how-image">
+
+                    📷
+
+                </div>
+
+            </div>
+
+            <div class="how-arrow">
+
+                →
+
+            </div>
+
+            <div class="how-card active">
+
+                <span class="how-label">
+                    Your 3D model
+                </span>
+
+                <div class="how-image">
+
+                    🧊
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<section id="examples" class="examples-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                AI GENERATED EXAMPLES
+            </span>
+
+            <h2>
+                See what your images
+                become.
+            </h2>
+
+            <p class="section-subtitle">
+                Upload a single photo and receive a downloadable
+                3D model in minutes.
+            </p>
+
+        </div>
+
+        <div class="examples-grid">
+
+            <!-- Example 1 -->
+
+            <div class="example-card">
+
+                <div class="example-box">
+
+                    <span class="example-label">
+                        Your Photo
+                    </span>
+
+                    <div class="example-image">
+
+                        🍔
+
+                    </div>
+
+                </div>
+
+                <div class="example-arrow">
+
+                    →
+
+                </div>
+
+                <div class="example-box result">
+
+                    <span class="example-label">
+
+                        3D Model
+
+                    </span>
+
+                    <div class="example-image">
+
+                        🧊
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Example 2 -->
+
+            <div class="example-card">
+
+                <div class="example-box">
+
+                    <span class="example-label">
+
+                        Your Photo
+
+                    </span>
+
+                    <div class="example-image">
+
+                        🧴
+
+                    </div>
+
+                </div>
+
+                <div class="example-arrow">
+
+                    →
+
+                </div>
+
+                <div class="example-box result">
+
+                    <span class="example-label">
+
+                        3D Model
+
+                    </span>
+
+                    <div class="example-image">
+
+                        🧊
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+<section id="credits" class="credits-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                CREDITS
+            </span>
+
+            <h2>
+                Simple, honest, and free to try.
+            </h2>
+
+            <p class="section-subtitle">
+
+                Every new account receives free credits to start creating
+                professional 3D models instantly.
+
+            </p>
+
+        </div>
+
+        <div class="credits-grid">
+
+            <!-- LEFT CARD -->
+
+            <div class="credit-card featured">
+
+                <div class="credit-badge">
+                    Included with every account
+                </div>
+
+                <h3>
+                    Free Account
+                </h3>
+
+                <div class="credit-number">
+
+                    <span>50</span>
+
+                    credits
+
+                </div>
+
+                <ul>
+
+                    <li>✔ 50 Credits after registration</li>
+
+                    <li>✔ Create 5 complete 3D models</li>
+
+                    <li>✔ Automatic background removal</li>
+
+                    <li>✔ Personal gallery & history</li>
+
+                </ul>
+
+            </div>
+
+            <!-- RIGHT CARD -->
+
+            <div class="credit-card">
+
+                <h3>
+                    Per Model
+                </h3>
+
+                <div class="credit-number">
+
+                    <span>10</span>
+
+                    credits
+
+                </div>
+
+                <ul>
+
+                    <li>✔ Credits deducted only after success</li>
+
+                    <li>✔ Download GLB anytime</li>
+
+                    <li>✔ Renew any model anytime</li>
+
+                    <li>✔ Live credit balance in dashboard</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
 
 @endsection

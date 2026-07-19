@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('image', file);
             const token = document.querySelector('meta[name="csrf-token"]')?.content;
 
-            fetch('/generate/upload', {
+            fetch('/generate', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': token,
@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
+                    console.log(data);
                 if (data.success) {
                     statusText.textContent = '✅ Model generated!';
                     statusText.className = 'success';

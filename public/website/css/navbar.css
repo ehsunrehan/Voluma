@@ -54,6 +54,51 @@
     color: var(--text-white);
 }
 
+/* ===============================
+   Navigation Pills
+================================ */
+
+.nav-pill{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:11px 22px;
+
+    border-radius:999px;
+
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.03);
+
+    color:var(--text-secondary);
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+.nav-pill:hover{
+
+    border-color:rgba(255,107,74,.45);
+
+    background:rgba(255,107,74,.08);
+
+    color:white;
+
+    transform:translateY(-2px);
+
+}
+
+
 /* Nav Actions */
 .nav-actions {
     display: flex;
