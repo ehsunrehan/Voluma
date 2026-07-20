@@ -42,18 +42,49 @@ public function generate(Request $request)
 
     $imagePath = storage_path('app/public/' . $request->image_path);
 
-    if (!file_exists($imagePath)) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Image not found.'
-        ], 404);
-    }
+$removeBg = Http::withHeaders([
+    'X-Api-Key' => env('REMOVE_BG_API_KEY')
+])
+->attach(
+    'image_file',
+    fopen($imagePath, 'r'),
+    basename($imagePath)
+)
+->post(
+    'https://api.remove.bg/v1.0/removebg',
+    [
+        'size' => 'auto'
+    ]
+);
+
+if (!$removeBg->successful()) {
+
+    return response()->json([
+        'success' => false,
+        'message' => 'Remove.bg failed',
+        'response' => $removeBg->body()
+    ],500);
+
+}
+
+$transparentName = time().'_transparent.png';
+
+Storage::disk('public')->put(
+    'transparent/'.$transparentName,
+    $removeBg->body()
+);
+
+$transparentPath = storage_path(
+    'app/public/transparent/'.$transparentName
+);
+
+
 
     $upload = Http::withToken(env('TRIPO_API_KEY'))
         ->attach(
             'file',
-            fopen($imagePath, 'r'),
-            basename($imagePath)
+            fopen($transparentPath, 'r'),
+            basename($transparentPath)
         )
         ->post('https://api.tripo3d.ai/v2/openapi/upload/sts');
 
@@ -88,12 +119,24 @@ public function generate(Request $request)
 
     $taskId = $generateData['data']['task_id'];
 
-    // Generation::create([
-    //     'user_id' => auth()->id(),
-    //     'task_id' => $taskId,
-    //     'original_image' => $request->image_path,
-    //     'status' => 'processing',
-    // ]);
+
+
+
+Generation::create([
+    'user_id' => auth()->id(),
+    'task_id' => $taskId,
+
+    'original_image' => $request->image_path,
+
+    'thumbnail' => 'transparent/'.$transparentName,
+
+    'status' => 'processing',
+
+    'credits_used' => 30
+]);
+
+
+
 
 return response()->json([
     'success' => true,
@@ -106,73 +149,58 @@ return response()->json([
 
 public function checkStatus($taskId)
 {
-
     $response = Http::withToken(env('TRIPO_API_KEY'))
-        ->get(
-            "https://api.tripo3d.ai/v2/openapi/task/{$taskId}"
-        );
+        ->get("https://api.tripo3d.ai/v2/openapi/task/$taskId");
 
-    return response()->json(
-        $response->json()
-    );
+    $data = $response->json();
+    if (
+    isset($data['data']['status']) &&
+    $data['data']['status'] === 'success'
+) {
 
+    $tripoUrl = $data['data']['output']['pbr_model'];
+
+    Generation::where('task_id',$taskId)
+        ->update([
+
+            'status'=>'completed',
+
+            'tripo_url'=>$tripoUrl
+
+        ]);
 }
 
 
-public function downloadModel($taskId)
+
+return response()->json($data);
+}
+
+
+public function streamModel($taskId)
 {
-    set_time_limit(300);
+    $generation = Generation::where('task_id', $taskId)->first();
 
-    $response = Http::withToken(env('TRIPO_API_KEY'))
-        ->get("https://api.tripo3d.ai/v2/openapi/task/{$taskId}");
-
-    $status = $response->json();
-
-    if (
-        !isset($status['data']['result']['pbr_model']['url'])
-    ) {
+    if (!$generation || !$generation->tripo_url) {
         return response()->json([
             'success' => false,
-            'message' => 'Model not ready.'
-        ]);
+            'message' => 'Model not found.'
+        ], 404);
     }
 
-    $glbUrl = $status['data']['result']['pbr_model']['url'];
+    $response = Http::withOptions([
+        'stream' => true,
+    ])->get($generation->tripo_url);
 
-    // $glb = Http::get($glbUrl);
-    $glb = Http::timeout(300)
-    ->withOptions([
-        'stream' => false,
-    ])
-    ->get($glbUrl);
+    if (!$response->successful()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Unable to fetch model.'
+        ], 500);
+    }
 
-
-
-$fileName = $taskId . '.glb';
-
-// Storage::disk('public')->put(
-//     'models/'.$fileName,
-//     $glb->body()
-// );
-
-
-file_put_contents(
-    storage_path('app/public/models/'.$fileName),
-    $glb->body()
-);
-
-
-
-
-
-    return response()->json([
-
-        'success' => true,
-
-        'model_url' => asset('storage/models/'.$fileName)
-
-    ]);
+    return response($response->body(), 200)
+        ->header('Content-Type', 'model/gltf-binary')
+        ->header('Access-Control-Allow-Origin', '*');
 }
-
 
 }

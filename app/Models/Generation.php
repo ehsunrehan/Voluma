@@ -16,6 +16,8 @@ class Generation extends Model
 
         'thumbnail',
 
+        'tripo_url',
+
         'glb_url',
 
         'status',

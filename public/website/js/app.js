@@ -215,66 +215,44 @@
     if (data.data.status === "success") {
 
         clearInterval(polling);
+            
+            console.log(data.data.output.pbr_model);
 
-        fetch('/model/download/' + currentTaskId)   
+            modelViewer.src="/stream-model/"+currentTaskId;
 
-        .then(res => res.json())
-
-        .then(response => {
-
-            console.log(response);
-
-
-            // viewerPlaceholder.style.display = "none";   
-
-
-            // modelViewer.style.filter = "blur(0)";
-
-            // previewImage.style.filter = "blur(0)";
-
-
+            
 
             modelViewer.style.display = "block";
 
             previewImage.style.display = "none";
 
-            modelViewer.src = response.model_url;
-
-            modelViewer.style.display = "block";
-
             loadingOverlay.style.display = "none";
 
             particleLoader.style.display = "flex";
 
-    modelViewer.addEventListener("load", function () {
+            setTimeout(() => {
 
-        particleLoader.style.display = "none";
+    particleLoader.style.display = "none";
 
-        modelViewer.style.transition = ".8s";
+    loadingOverlay.style.display = "none";
 
-        modelViewer.style.filter = "blur(0px)";
+    modelViewer.style.transition = ".8s";
 
-        previewImage.style.filter = "blur(0px)";
+    modelViewer.style.filter = "blur(0px)";
 
-        loadingOverlay.style.display = "none";
+    previewImage.style.filter = "blur(0px)";
 
-        viewerPlaceholder.style.display = "none";
+    viewerPlaceholder.style.display = "none";
 
-        previewImage.style.display = "none";
+    previewImage.style.display = "none";
 
-        previewImage.style.filter = "blur(0)";
+    modelViewer.style.opacity = "1";
 
-        modelViewer.style.filter = "blur(0)";
+    statusText.textContent = "✅ 3D Model Ready!";
 
-        modelViewer.style.opacity = "1";
+    statusText.className = "success";
 
-        statusText.textContent = "✅ 3D Model Ready!";
-
-        statusText.className = "success";
-
-    }, { once: true });
-        });
-
+}, 800);
         
 
     }

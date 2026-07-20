@@ -33,6 +33,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/model/download/{taskId}',
         [GenerationController::class,'downloadModel']
     )->name('model.download');
+
+    Route::get('/stream-model/{taskId}', [GenerationController::class, 'streamModel']);
+
 });
 
 
