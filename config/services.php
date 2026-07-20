@@ -34,5 +34,12 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'removebg' => [
+        'key' => env('REMOVE_BG_API_KEY'),
+    ],
+
+    'tripo' => [
+        'key' => env('TRIPO_API_KEY'),
+    ],
 
 ];

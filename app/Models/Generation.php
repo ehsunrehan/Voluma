@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Generation extends Model
 {
@@ -11,28 +10,17 @@ class Generation extends Model
 
         'user_id',
 
+        'task_id',
+
         'original_image',
 
-        'removed_background',
+        'thumbnail',
 
-        'glb_file',
-
-        'preview_image',
-
-        'tripo_task_id',
+        'glb_url',
 
         'status',
 
-        'credits_used',
-
-        'downloads',
-
-        'renew_count'
+        'credits_used'
 
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

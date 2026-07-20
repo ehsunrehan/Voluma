@@ -155,6 +155,48 @@
                     style="display:none;"
                     >
 
+
+
+
+                    <div id="loadingOverlay">
+                        <div class="loader"></div>
+                        <div id="loadingPercent">0%</div>
+                        <div class="progress-bar">
+                            <div id="progressFill"></div>
+                        </div>
+                        <div id="loadingText">
+                            Uploading AI Input...
+                        </div>
+                    </div>
+
+                    
+                    <div id="particleLoader">
+                        <div class="particle-logo">
+                            ✦
+                        </div>
+                        <span>
+                            Finalizing Preview...
+                        </span>
+                    </div>
+
+
+
+                    <model-viewer
+                        id="modelViewer"
+                        src=""
+                        camera-controls
+                        auto-rotate
+                        shadow-intensity="1"
+                        style="display:none;width:100%;height:100%;">
+                    </model-viewer>
+
+
+
+
+
+
+
+
                 </div>
 
                 <div class="status-box">

@@ -6,36 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+
+
+public function up(): void
 {
     Schema::create('generations', function (Blueprint $table) {
 
         $table->id();
 
-        $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+        $table->foreignId('user_id')
+            ->constrained()
+            ->cascadeOnDelete();
+
+        $table->string('task_id')->unique();
 
         $table->string('original_image');
 
-        $table->string('removed_background')->nullable();
+        $table->string('thumbnail')->nullable();
 
-        $table->string('glb_file')->nullable();
+        $table->text('glb_url')->nullable();
 
-        $table->string('preview_image')->nullable();
+        $table->string('status')->default('processing');
 
-        $table->string('tripo_task_id')->nullable();
-
-        $table->enum('status',[
-            'uploaded',
-            'processing',
-            'completed',
-            'failed'
-        ])->default('uploaded');
-
-        $table->integer('credits_used')->default(10);
-
-        $table->integer('downloads')->default(0);
-
-        $table->integer('renew_count')->default(0);
+        $table->integer('credits_used')->default(30);
 
         $table->timestamps();
 

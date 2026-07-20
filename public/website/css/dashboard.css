@@ -580,3 +580,218 @@ UPLOAD PREVIEW
     flex:1;
 
 }
+
+
+#loadingOverlay{
+
+position:absolute;
+inset:0;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+flex-direction:column;
+
+background:rgba(15,15,15,.65);
+
+backdrop-filter:blur(10px);
+
+z-index:999;
+
+}
+
+.loader{
+
+width:70px;
+height:70px;
+
+border:6px solid rgba(255,255,255,.2);
+border-top:6px solid white;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+#loadingPercent{
+
+margin-top:20px;
+
+font-size:22px;
+
+font-weight:700;
+
+color:white;
+
+}
+
+
+.progressBar{
+
+width:260px;
+
+height:8px;
+
+background:rgba(255,255,255,.15);
+
+border-radius:100px;
+
+margin-top:18px;
+
+overflow:hidden;
+
+}
+
+#progressFill{
+
+width:0%;
+
+height:100%;
+
+background:#49DEDE;
+
+transition:.4s;
+
+border-radius:100px;
+
+}
+
+#modelViewer{
+
+opacity:0;
+
+transition:.6s;
+
+transition:opacity .5s ease;
+
+opacity:0;
+
+}
+
+
+
+.progress-bar{
+
+    width:260px;
+
+    height:8px;
+
+    background:rgba(255,255,255,.15);
+
+    border-radius:999px;
+
+    margin-top:18px;
+
+    overflow:hidden;
+
+}
+
+#progressFill{
+
+    width:0%;
+
+    height:100%;
+
+    background:white;
+
+    transition:.4s;
+
+}
+
+#loadingText{
+
+    margin-top:16px;
+
+    color:white;
+
+    font-size:15px;
+
+    letter-spacing:.4px;
+
+}
+
+#particleLoader{
+
+position:absolute;
+
+inset:0;
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+flex-direction:column;
+
+backdrop-filter:blur(10px);
+
+background:rgba(15,15,15,.25);
+
+z-index:999;
+
+}
+
+.particle-logo{
+
+font-size:90px;
+
+color:white;
+
+animation:particleSpin 2s linear infinite;
+
+filter:drop-shadow(0 0 30px white);
+
+}
+
+#particleLoader span{
+
+margin-top:20px;
+
+font-size:18px;
+
+color:white;
+
+letter-spacing:.5px;
+
+}
+
+@keyframes particleSpin{
+
+0%{
+
+transform:rotate(0deg) scale(.9);
+
+opacity:.6;
+
+}
+
+50%{
+
+transform:rotate(180deg) scale(1.15);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:rotate(360deg) scale(.9);
+
+opacity:.6;
+
+}
+
+}

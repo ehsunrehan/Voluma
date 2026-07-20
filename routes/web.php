@@ -25,6 +25,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/generate/model',
         [GenerationController::class,'generate']
     )->name('generate.model');
+
+    Route::get('/generate/status/{taskId}',
+        [GenerationController::class,'checkStatus']
+    )->name('generate.status');
+
+    Route::get('/model/download/{taskId}',
+        [GenerationController::class,'downloadModel']
+    )->name('model.download');
 });
 
 
