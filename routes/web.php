@@ -36,6 +36,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/stream-model/{taskId}', [GenerationController::class, 'streamModel']);
 
+    Route::post('/credits/deduct',
+        [GenerationController::class,'deductCredits']
+    )->name('credits.deduct');
+
 });
 
 

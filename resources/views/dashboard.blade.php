@@ -106,11 +106,20 @@
 
             <button
                 class="btn btn-primary"
-                id="generateBtn">
-
+                id="generateBtn"
+                @if($credits<=0) disabled @endif>
                 Generate 3D
-
             </button>
+            
+            @if($credits<=0)
+                <p
+                id="creditWarning"
+                style="margin-top:15px;color:#ff6b6b;text-align:center;">
+                You don't have enough credits.
+
+                </p>
+
+            @endif
 
         </div>
 
@@ -464,7 +473,7 @@
 
                 <div class="credit-number">
 
-                    <span>50</span>
+                    <span id="creditCount">{{ $credits }}</span>
 
                     credits
 

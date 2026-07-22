@@ -22,8 +22,6 @@ public function up(): void
 
         $table->string('original_image');
 
-        $table->string('transparent_image')->nullable();
-
         $table->string('thumbnail')->nullable();
 
         $table->text('tripo_url')->nullable();

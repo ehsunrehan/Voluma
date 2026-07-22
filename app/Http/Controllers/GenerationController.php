@@ -175,32 +175,60 @@ public function checkStatus($taskId)
 return response()->json($data);
 }
 
-
 public function streamModel($taskId)
 {
+    set_time_limit(300);
+
     $generation = Generation::where('task_id', $taskId)->first();
 
     if (!$generation || !$generation->tripo_url) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Model not found.'
-        ], 404);
+        abort(404);
     }
 
-    $response = Http::withOptions([
-        'stream' => true,
-    ])->get($generation->tripo_url);
+    $resource = fopen($generation->tripo_url, 'rb');
 
-    if (!$response->successful()) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Unable to fetch model.'
-        ], 500);
+    if (!$resource) {
+        abort(500);
     }
 
-    return response($response->body(), 200)
-        ->header('Content-Type', 'model/gltf-binary')
-        ->header('Access-Control-Allow-Origin', '*');
+    return response()->stream(function () use ($resource) {
+
+        while (!feof($resource)) {
+            echo fread($resource, 8192);
+            flush();
+        }
+
+        fclose($resource);
+
+    }, 200, [
+        'Content-Type' => 'model/gltf-binary',
+        'Access-Control-Allow-Origin' => '*',
+        'Cache-Control' => 'public, max-age=3600',
+    ]);
+}    
+
+
+
+public function deductCredits(Request $request)
+{
+    $user = auth()->user();
+
+    if ($user->credits < 10) {
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Not enough credits.'
+        ],400);
+
+    }
+
+    $user->decrement('credits',10);
+
+    return response()->json([
+        'success' => true,
+        'credits' => $user->fresh()->credits
+    ]);
 }
+
 
 }
