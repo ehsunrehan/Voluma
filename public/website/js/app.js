@@ -118,6 +118,25 @@
             if (generateBtn) {
 
                 generateBtn.addEventListener("click", function () {
+
+                    
+                    // Reset previous model
+                    modelViewer.style.opacity = "0";
+                    modelViewer.style.display = "none";
+                    modelViewer.removeAttribute("src");
+                    // modelViewer.load();
+
+                    previewImage.style.display = "none";
+                    viewerPlaceholder.style.display = "none";
+
+                    particleLoader.style.display = "none";
+                    loadingOverlay.style.display = "flex";
+                    loadingText.style.display = "block";
+
+                    loadingPercent.innerHTML = "0%";
+                    progressFill.style.width = "0%";
+
+
                     
                     generationFinished = false; 
                     modelLoaded = false;
