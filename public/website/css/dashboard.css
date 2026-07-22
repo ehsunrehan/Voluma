@@ -834,6 +834,13 @@ opacity:.6;
 
 }
 
+.credit-popup-error {
+    background: #1a1a1a;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    box-shadow: 0 4px 20px rgba(255, 107, 107, 0.25);
+}
+
 .credit-popup.show{
 
     transform:translateY(0) scale(1);

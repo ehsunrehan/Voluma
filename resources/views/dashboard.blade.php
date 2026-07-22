@@ -104,22 +104,14 @@
 
             </button>
 
-            <button
+           <button
                 class="btn btn-primary"
                 id="generateBtn"
-                @if($credits<=0) disabled @endif>
+                data-low-credits="{{ $credits <= 0 ? '1' : '0' }}">
                 Generate 3D
             </button>
             
-            @if($credits<=0)
-                <p
-                id="creditWarning"
-                style="margin-top:15px;color:#ff6b6b;text-align:center;">
-                You don't have enough credits.
-
-                </p>
-
-            @endif
+           
 
         </div>
 
