@@ -61,9 +61,8 @@
 
                 @auth
                     <span class="credits-badge">
-                        {{ Auth::user()->credits ?? 50 }}
-                        Credits
-                    </span>
+                        <span id="navbarCreditCount">{{ $credits }}</span> Credits
+                        </span>
 
                     <div class="user-dropdown" id="userDropdown">
                         <button class="user-btn">

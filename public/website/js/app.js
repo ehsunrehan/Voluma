@@ -21,11 +21,14 @@
             const particleLoader = document.getElementById("particleLoader");
             const loadingText = document.getElementById("loadingText");
             const creditCount = document.getElementById("creditCount");
+            const navbarCreditCount = document.getElementById("navbarCreditCount");
+           
 
             let uploadedImage = "";
             let currentTaskId = "";
             let polling = null;
             let modelLoaded = false;
+            let generationFinished = false; 
 
             if (uploadArea && fileInput) {
                 uploadArea.addEventListener('click', function(e) {
@@ -115,7 +118,8 @@
             if (generateBtn) {
 
                 generateBtn.addEventListener("click", function () {
-
+                    
+                    generationFinished = false; 
                     modelLoaded = false;
                     statusText.textContent = "Creating 3D model...";
                     statusText.className = "loading";
@@ -180,6 +184,9 @@
                     .then(res=>res.json())
 
                     .then(data=>{
+                            if(generationFinished){
+                                return;
+                            }
 
                         console.log(data);
 
@@ -215,7 +222,9 @@
                         }
                         progressFill.style.width = data.data.progress + "%";
 
-        if (data.data.status === "success") {
+if (data.data.status === "success" && !generationFinished) {
+
+    generationFinished = true;
 
     clearInterval(polling);
 
@@ -256,10 +265,21 @@ setTimeout(() => {
     })
     .then(res => res.json())
     .then(data => {
-
+        console.log(data);
         if (!data.success) return;
 
-        animateCredits(data.credits);
+        console.log("Before:", creditCount.textContent);
+
+creditCount.textContent = data.credits;
+if (navbarCreditCount) {
+    navbarCreditCount.textContent = data.credits;
+}
+
+console.log("After:", creditCount.textContent);
+
+setTimeout(() => {
+    console.log("1 sec later:", creditCount.textContent);
+},1000);
         showCreditAnimation();
 
     });
