@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const loadingText = document.getElementById("loadingText");
     const creditCount = document.getElementById("creditCount");
     const navbarCreditCount = document.getElementById("navbarCreditCount");
+    const downloadModalOverlay = document.getElementById("downloadModalOverlay");
+    const downloadFileName = document.getElementById("downloadFileName");
+    const downloadFileType = document.getElementById("downloadFileType");
+    const downloadTypeError = document.getElementById("downloadTypeError");
+    const confirmDownloadBtn = document.getElementById("confirmDownloadBtn");
+    const closeDownloadModal = document.getElementById("closeDownloadModal");
 
 
 
@@ -30,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let polling = null;
     let modelLoaded = false;
     let generationFinished = false;
+    let isRenewFlow = false;
 
     if (uploadArea && fileInput) {
         uploadArea.addEventListener('click', function (e) {
@@ -189,25 +196,189 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', () => alert('Download coming soon.'));
+if (downloadBtn) {
+        downloadBtn.addEventListener('click', function () {
+
+            if (!modelLoaded || !currentTaskId) {
+                showNoCreditsPopup('Model is not ready yet.');
+                return;
+            }
+
+            const baseName = (imageName.textContent || 'model').replace(/\.[^/.]+$/, "");
+
+            downloadFileName.value = baseName;
+            downloadFileType.value = "";
+            downloadTypeError.style.display = "none";
+
+            downloadModalOverlay.style.display = "flex";
+
+        });
     }
 
-    if (renewBtn) {
-        renewBtn.addEventListener('click', () => alert('Renew coming soon.'));
+    if (closeDownloadModal) {
+        closeDownloadModal.addEventListener('click', function () {
+            downloadModalOverlay.style.display = "none";
+        });
     }
+
+    if (confirmDownloadBtn) {
+        confirmDownloadBtn.addEventListener('click', function () {
+
+            const selectedType = downloadFileType.value;
+
+            if (!selectedType) {
+                downloadTypeError.style.display = "block";
+                return;
+            }
+
+            downloadTypeError.style.display = "none";
+
+            const finalName = (downloadFileName.value || '').trim() || "model";
+
+            confirmDownloadBtn.disabled = true;
+            confirmDownloadBtn.textContent = "Preparing...";
+
+            fetch('/download/model', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    task_id: currentTaskId,
+                    type: selectedType
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+
+                    confirmDownloadBtn.disabled = false;
+                    confirmDownloadBtn.textContent = "Download";
+
+                    if (!data.success) {
+                        downloadTypeError.textContent = data.message || 'Download failed. Please try another format.';
+                        downloadTypeError.style.display = "block";
+                        return;
+                    }
+
+                    fetch(data.download_url)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = finalName + '.' + selectedType;
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                            URL.revokeObjectURL(url);
+
+                            downloadModalOverlay.style.display = "none";
+                        });
+
+                })
+                .catch(function () {
+                    confirmDownloadBtn.disabled = false;
+                    confirmDownloadBtn.textContent = "Download";
+                    downloadTypeError.textContent = 'Something went wrong. Please try again.';
+                    downloadTypeError.style.display = "block";
+                });
+
+        });
+    }
+
+
+    
+    if (renewBtn) {
+        renewBtn.addEventListener('click', function () {
+
+            if (!currentTaskId) {
+                showNoCreditsPopup('No previous generation found to renew.');
+                return;
+            }
+
+            if (renewBtn.disabled) {
+                return;   // already ek request chal rahi hai, dobara mat chalao
+            }
+
+            renewBtn.disabled = true;
+            isRenewFlow = true;
+
+            modelViewer.style.opacity = "0";
+            modelViewer.style.display = "none";
+            modelViewer.removeAttribute("src");
+
+            previewImage.style.display = "none";
+            viewerPlaceholder.style.display = "none";
+
+            particleLoader.style.display = "none";
+            loadingOverlay.style.display = "flex";
+            loadingText.style.display = "block";
+
+            loadingPercent.innerHTML = "0%";
+            progressFill.style.width = "0%";
+
+            generationFinished = false;
+            modelLoaded = false;
+            statusText.textContent = "Renewing 3D model...";
+            statusText.className = "loading";
+
+            previewImage.style.filter = "blur(8px)";
+            modelViewer.style.filter = "blur(8px)";
+
+            fetch('/renew/model', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    task_id: currentTaskId
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+
+                    renewBtn.disabled = false;
+
+                    if (!data.success) {
+                        isRenewFlow = false;
+                        loadingOverlay.style.display = "none";
+                        showNoCreditsPopup(data.message || 'Renew failed.');
+                        return;
+                    }
+
+                    currentTaskId = data.task_id;
+                    startPolling();
+                });
+
+        });
+    }
+
+    
 
 
     function startPolling() {
 
+        let isFetching = false;
+
         polling = setInterval(() => {
 
-            fetch('/generate/status/' + currentTaskId)
+            if (isFetching) {
+                return;
+            }
 
+            isFetching = true;
+
+            fetch('/generate/status/' + currentTaskId)
 
                 .then(res => res.json())
 
                 .then(data => {
+
+                    isFetching = false;
+
                     if (generationFinished) {
                         return;
                     }
@@ -264,33 +435,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         loadingText.style.display = "none";
 
-                        modelViewer.src = "/stream-model/" + currentTaskId;
+                       modelViewer.src = "/stream-model/" + currentTaskId;
 
-                        fetch('/credits/deduct', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                            }
-                        })
-                            .then(res => res.json())
-                            .then(data => {
-                                console.log(data);
-
-                                if (!data.success) {
-                                    showNoCreditsPopup(data.message);
-                                    return;
+                        if (isRenewFlow) {
+                            isRenewFlow = false;
+                        } else {
+                            fetch('/credits/deduct', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                                 }
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data);
 
-                                creditCount.textContent = data.credits;
-                                if (navbarCreditCount) {
-                                    navbarCreditCount.textContent = data.credits;
-                                }
+                                    if (!data.success) {
+                                        showNoCreditsPopup(data.message);
+                                        return;
+                                    }
 
-                                showCreditAnimation();
-                            });
+                                    creditCount.textContent = data.credits;
+                                    if (navbarCreditCount) {
+                                        navbarCreditCount.textContent = data.credits;
+                                    }
+
+                                    showCreditAnimation();
+                                });
+                        }
 
                         modelViewer.addEventListener("load", function () {
+
+                            modelLoaded = true;
 
                             loadingOverlay.style.display = "none";
                             loadingText.style.display = "none";
@@ -326,14 +503,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         loadingOverlay.style.display = "none";
                     }
 
-
-
+                })
+                .catch(() => {
+                    isFetching = false;
                 });
 
         }, 1000);
 
     }
-
 
     function showCreditAnimation() {
 

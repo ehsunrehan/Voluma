@@ -40,6 +40,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         [GenerationController::class,'deductCredits']
     )->name('credits.deduct');
 
+    Route::post('/renew/model', [GenerationController::class,'renewModel']);
+
+    Route::post('/download/model', [GenerationController::class,'downloadModel']);
+
 });
 
 

@@ -231,6 +231,49 @@
                     </button>
 
                 </div>
+                
+                    <!-- Download Modal -->
+<div id="downloadModalOverlay" class="download-modal-overlay" style="display:none;">
+    <div class="download-modal-box">
+
+        <h3 class="download-modal-title">Download 3D Model</h3>
+
+        <label class="download-modal-label" for="downloadFileName">File Name</label>
+        <input
+            type="text"
+            id="downloadFileName"
+            class="download-modal-input"
+            placeholder="Enter file name">
+
+        <div class="download-modal-row">
+
+            <div class="download-modal-col">
+                <label class="download-modal-label" for="downloadFileType">File Type</label>
+                <select id="downloadFileType" class="download-modal-select">
+                    <option value="" selected disabled>Select type</option>
+                    <option value="glb">GLB</option>
+                </select>
+            </div>
+
+            <div class="download-modal-col">
+                <label class="download-modal-label">&nbsp;</label>
+                <button id="confirmDownloadBtn" class="btn btn-primary download-modal-confirm">
+                    Download
+                </button>
+            </div>
+
+        </div>
+
+        <p id="downloadTypeError" class="download-modal-error" style="display:none;">
+            Please select a file type.
+        </p>
+
+        <button id="closeDownloadModal" class="download-modal-close">
+            Cancel
+        </button>
+
+    </div>
+</div>
 
             </div>
 
