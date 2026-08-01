@@ -6,28 +6,20 @@
 
             <div class="footer-left">
 
-                <h3 class="footer-logo">
-                    <span>Vol</span>uma
-                </h3>
+            <a href="{{ route('home') }}" class="logo">
+                <span class="logo-text logo-red">V</span>
+                <span class="logo-text logo-cyan">o</span>
+                <span class="logo-text">luma</span>
+            </a>
 
                 <p>
-                    Transform any image into a professional 3D model
-                    using AI-powered background removal and generation.
+                    Transform any image, or just a written prompt, into a
+                    professional 3D model using AI-powered generation.
                 </p>
 
             </div>
 
-            <div class="footer-right">
-
-                <a href="#">Features</a>
-
-                <a href="#">How It Works</a>
-
-                <a href="#">Pricing</a>
-
-                <a href="#">Contact</a>
-
-            </div>
+          
 
         </div>
 

@@ -102,6 +102,7 @@ $transparentPath = storage_path(
     $generate = Http::withToken(env('TRIPO_API_KEY'))
         ->post('https://api.tripo3d.ai/v2/openapi/task', [
             "type" => "image_to_model",
+            "model_version" => "v3.1-20260211",
             "file" => [
                 "type" => "image",
                 "file_token" => $imageToken
@@ -113,7 +114,8 @@ $transparentPath = storage_path(
     if (!isset($generateData['data']['task_id'])) {
         return response()->json([
             'success' => false,
-            'generate' => $generateData
+            'generate' => $generateData,
+            'debug_sent_token' => $imageToken,
         ], 500);
     }
 
@@ -125,13 +127,10 @@ $transparentPath = storage_path(
 Generation::create([
     'user_id' => auth()->id(),
     'task_id' => $taskId,
-
+    'source_type' => 'image',
     'original_image' => $request->image_path,
-
     'thumbnail' => 'transparent/'.$transparentName,
-
     'status' => 'processing',
-
     'credits_used' => 30
 ]);
 
@@ -144,7 +143,6 @@ return response()->json([
     'generate' => $generateData
 ]);
 }
-
 
 
 public function checkStatus($taskId)
@@ -160,12 +158,22 @@ public function checkStatus($taskId)
 
     $tripoUrl = $data['data']['output']['pbr_model'];
 
+    $fileSize = null;
+    try {
+        $headResponse = Http::withOptions(['allow_redirects' => true])->head($tripoUrl);
+        $fileSize = $headResponse->header('Content-Length');
+    } catch (\Exception $e) {
+        $fileSize = null;
+    }
+
     Generation::where('task_id',$taskId)
         ->update([
 
             'status'=>'completed',
 
-            'tripo_url'=>$tripoUrl
+            'tripo_url'=>$tripoUrl,
+
+            'file_size'=>$fileSize
 
         ]);
 }
@@ -175,7 +183,8 @@ public function checkStatus($taskId)
 return response()->json($data);
 }
 
-public function streamModel($taskId)
+
+public function streamModel(Request $request, $taskId)
 {
     set_time_limit(300);
 
@@ -204,6 +213,7 @@ public function streamModel($taskId)
         'Content-Type' => 'model/gltf-binary',
         'Access-Control-Allow-Origin' => '*',
         'Cache-Control' => 'public, max-age=3600',
+        'Content-Disposition' => 'attachment; filename="' . preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->query('name', 'model')) . '.glb"',
     ]);
 }    
 
@@ -241,7 +251,52 @@ public function renewModel(Request $request)
         ->where('user_id', auth()->id())
         ->first();
 
-    if (!$generation || !$generation->thumbnail) {
+
+    // if (!$generation) {
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'Original generation not found.'
+    //     ], 404);
+    // }
+
+    if ($generation->source_type === 'text') {
+
+        $generate = Http::withToken(env('TRIPO_API_KEY'))
+            ->post('https://api.tripo3d.ai/v2/openapi/task', [
+                "type" => "text_to_model",
+                "model_version" => "v3.1-20260211",
+                "prompt" => $generation->prompt
+            ]);
+
+        $generateData = $generate->json();
+
+        if (!isset($generateData['data']['task_id'])) {
+            return response()->json([
+                'success' => false,
+                'generate' => $generateData
+            ], 500);
+        }
+
+        $newTaskId = $generateData['data']['task_id'];
+
+        Generation::create([
+            'user_id' => auth()->id(),
+            'task_id' => $newTaskId,
+            'source_type' => 'text',
+            'prompt' => $generation->prompt,
+            'original_image' => null,
+            'thumbnail' => null,
+            'status' => 'processing',
+            'credits_used' => 0
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'task_id' => $newTaskId
+        ]);
+    }
+
+    if (!$generation->thumbnail) {
         return response()->json([
             'success' => false,
             'message' => 'Original processed image not found.'
@@ -279,6 +334,7 @@ public function renewModel(Request $request)
     $generate = Http::withToken(env('TRIPO_API_KEY'))
         ->post('https://api.tripo3d.ai/v2/openapi/task', [
             "type" => "image_to_model",
+            "model_version" => "v3.1-20260211",
             "file" => [
                 "type" => "image",
                 "file_token" => $imageToken
@@ -299,6 +355,7 @@ public function renewModel(Request $request)
     Generation::create([
         'user_id' => auth()->id(),
         'task_id' => $newTaskId,
+        'source_type' => 'image',
         'original_image' => $generation->original_image,
         'thumbnail' => $generation->thumbnail,
         'status' => 'processing',
@@ -335,7 +392,7 @@ public function downloadModel(Request $request)
     if ($type === 'glb') {
         return response()->json([
             'success' => true,
-            'download_url' => url('/stream-model/' . $taskId)
+            'download_url' => url('/stream-model/' . $taskId) . '?name=' . urlencode($request->name ?? 'model')
         ]);
     }
 
@@ -399,5 +456,80 @@ public function downloadModel(Request $request)
         ], 200);
     }
 }
+
+
+public function gallery()
+{
+    $cutoff = now()->subDay();
+
+    $expired = Generation::where('user_id', auth()->id())
+        ->where('created_at', '<', $cutoff)
+        ->get();
+
+    foreach ($expired as $old) {
+        if ($old->original_image) {
+            Storage::disk('public')->delete($old->original_image);
+        }
+        if ($old->thumbnail) {
+            Storage::disk('public')->delete($old->thumbnail);
+        }
+    }
+
+    Generation::where('user_id', auth()->id())
+        ->where('created_at', '<', $cutoff)
+        ->delete();
+
+    $generations = Generation::where('user_id', auth()->id())
+        ->where('status', 'completed')
+        ->orderByDesc('id')
+        ->get();
+
+    $credits = auth()->user()->credits;
+
+    return view('gallery', compact('generations', 'credits'));
+}
+
+public function generateFromText(Request $request)
+{
+    $request->validate([
+        'prompt' => 'required|string|max:500'
+    ]);
+
+    $generate = Http::withToken(env('TRIPO_API_KEY'))
+        ->post('https://api.tripo3d.ai/v2/openapi/task', [
+            "type" => "text_to_model",
+            "model_version" => "v3.1-20260211",
+            "prompt" => $request->prompt
+        ]);
+
+    $generateData = $generate->json();
+
+    if (!isset($generateData['data']['task_id'])) {
+        return response()->json([
+            'success' => false,
+            'generate' => $generateData,
+            'debug_sent_prompt' => $request->prompt,
+        ], 500);
+    }
+
+    $taskId = $generateData['data']['task_id'];
+
+    Generation::create([
+        'user_id' => auth()->id(),
+        'task_id' => $taskId,
+        'source_type' => 'text',
+        'prompt' => $request->prompt,
+        'original_image' => null,
+        'thumbnail' => null,
+        'status' => 'processing',
+        'credits_used' => 30
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'task_id' => $taskId
+    ]);
+}
+
 
 }

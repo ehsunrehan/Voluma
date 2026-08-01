@@ -20,4 +20,10 @@ class DashboardController extends Controller
     {
         return view('profile');
     }
+
+    public function textDashboard()
+    {
+        $credits = auth()->user()->credits;
+        return view('text-dashboard', compact('credits'));
+    }
 }

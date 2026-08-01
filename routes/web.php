@@ -4,12 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GenerationController;
+use App\Http\Controllers\ConvertController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/dashboard',[DashboardController::class,'index'])
+    Route::get('/image-to-3d',[DashboardController::class,'index'])
         ->name('dashboard');
 
     Route::get('/history',[DashboardController::class,'history'])
@@ -43,6 +44,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/renew/model', [GenerationController::class,'renewModel']);
 
     Route::post('/download/model', [GenerationController::class,'downloadModel']);
+
+    Route::get('/gallery', [GenerationController::class,'gallery'])->name('gallery');
+
+    Route::get('/text-to-3d', [DashboardController::class,'textDashboard'])->name('text.dashboard');
+
+    Route::post('/generate/text-model', [GenerationController::class,'generateFromText'])->name('generate.text.model');
+
+    Route::get('/convert', [ConvertController::class, 'index'])->name('convert.index');
+
+    Route::post('/convert/upload', [ConvertController::class, 'upload'])->name('convert.upload');
+
+    Route::post('/convert/start', [ConvertController::class, 'start'])->name('convert.start');
+
+    Route::get('/convert/status/{jobId}', [ConvertController::class, 'checkStatus'])->name('convert.status');
+
+    Route::get('/convert/download/{jobId}', [ConvertController::class, 'download'])->name('convert.download');
 
 });
 

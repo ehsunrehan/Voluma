@@ -32,6 +32,13 @@
 
                 <div class="upload-area" id="uploadArea">
 
+                <!-- Uploading State -->
+                    <div id="uploadingState" style="display:none;">
+                        <div class="loader"></div>
+                        <h3>Uploading Image...</h3>
+                        <p>Please wait a moment</p>
+                    </div>
+
     <!-- Upload State -->
 
     <div id="uploadState">
@@ -73,16 +80,23 @@
 
     <!-- Preview State -->
 
+    
     <div
-        id="previewState"
-        style="display:none;">
+    id="previewState"
+    style="display:none;">
 
+    <div class="preview-image-wrapper" style="position:relative;">
         <img
             id="uploadedPreview"
             src=""
             alt="Preview">
 
-        <div class="image-info">
+        <div id="reuploadOverlay" class="reupload-overlay" style="display:none;">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <div class="image-info">
 
             <h4 id="imageName">
 
@@ -166,7 +180,7 @@
                             <div id="progressFill"></div>
                         </div>
                         <div id="loadingText">
-                            Uploading AI Input...
+                            Uploading your Input...
                         </div>
                     </div>
 
@@ -469,107 +483,10 @@
 
 
 
-<section id="credits" class="credits-section">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <span class="section-tag">
-                CREDITS
-            </span>
-
-            <h2>
-                Simple, honest, and free to try.
-            </h2>
-
-            <p class="section-subtitle">
-
-                Every new account receives free credits to start creating
-                professional 3D models instantly.
-
-            </p>
-
-        </div>
-
-        <div class="credits-grid">
-
-            <!-- LEFT CARD -->
-
-            <div class="credit-card featured">
-
-                <div class="credit-badge">
-                    Included with every account
-                </div>
-
-                <h3>
-                    Free Account
-                </h3>
-
-                <div class="credit-number">
-
-                    <span id="creditCount">{{ $credits }}</span>
-
-                    credits
-
-                </div>
-
-                <ul>
-
-                    <li>✔ 50 Credits after registration</li>
-
-                    <li>✔ Create 5 complete 3D models</li>
-
-                    <li>✔ Automatic background removal</li>
-
-                    <li>✔ Personal gallery & history</li>
-
-                </ul>
-
-            </div>
-
-            <!-- RIGHT CARD -->
-
-            <div class="credit-card">
-
-                <h3>
-                    Per Model
-                </h3>
-
-                <div class="credit-number">
-
-                    <span>10</span>
-
-                    credits
-
-                </div>
-
-                <ul>
-
-                    <li>✔ Credits deducted only after success</li>
-
-                    <li>✔ Download GLB anytime</li>
-
-                    <li>✔ Renew any model anytime</li>
-
-                    <li>✔ Live credit balance in dashboard</li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
 
 
 
-
-
-
-
+<script src="{{ asset('website/js/app.js') }}"></script>
 
 
 @endsection

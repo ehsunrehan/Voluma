@@ -1,7 +1,7 @@
 /* ===== DASHBOARD ===== */
-.dashboard {
+/* .dashboard {
     padding: 60px 0 100px;
-}
+} */
 
 .dashboard-grid {
     display: grid;
@@ -10,13 +10,13 @@
     align-items: stretch;
 }
 
-.dashboard-card {
+/* .dashboard-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 36px;
     transition: all .3s;
-}
+} */
 
 .dashboard-card:hover {
     border-color: var(--border-light);
@@ -24,7 +24,7 @@
 }
 
 .card-header {
-    margin-bottom: 24px;
+    margin-bottom: 14px;
 }
 
 .card-title {
@@ -39,14 +39,14 @@
 }
 
 /* Upload Area */
-.upload-area {
+/* .upload-area {
     border: 2px dashed var(--border);
     border-radius: var(--radius);
     padding: 48px 24px;
     text-align: center;
     transition: all .3s;
     cursor: pointer;
-}
+} */
 
 .upload-area:hover {
     border-color: var(--coral);
@@ -71,7 +71,7 @@
 }
 
 /* Viewer */
-.viewer-area {
+/* .viewer-area {
     background: var(--bg-primary);
     border-radius: var(--radius);
     border: 1px solid var(--border);
@@ -83,7 +83,7 @@
     position: relative;
     overflow: hidden;
     z-index: 1;
-}
+} */
 
 .viewer-placeholder {
     text-align: center;
@@ -529,7 +529,7 @@ UPLOAD PREVIEW
 
 }
 
-#uploadedPreview{
+/* #uploadedPreview{
 
     width:100%;
 
@@ -543,7 +543,7 @@ UPLOAD PREVIEW
 
     border:1px solid rgba(255,255,255,.08);
 
-}
+} */
 
 .image-info{
 
@@ -879,4 +879,67 @@ opacity:.6;
 
     }
 
+}
+
+
+.dashboard {
+    padding: 30px 0 50px;
+}
+
+.dashboard-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    transition: all .3s;
+}
+
+.upload-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 26px 20px;
+    text-align: center;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.viewer-area {
+    background: var(--bg-primary);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+#uploadedPreview{
+    width:100%;
+    height:220px;
+    object-fit:contain;
+    border-radius:18px;
+    background:#0F172A;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.reupload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: inherit;
+    z-index: 5;
+}
+
+.preview-image-wrapper img.reuploading {
+    filter: blur(6px);
+    transition: filter .3s ease;
 }

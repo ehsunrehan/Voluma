@@ -22,7 +22,7 @@
 
                 <span class="hero-badge">
 
-                    IMAGE → 3D AI PIPELINE
+                    IMAGE / TEXT → 3D AI PIPELINE
 
                 </span>
 
@@ -32,15 +32,16 @@
 
                     <span>3D Models</span>
 
-                    From a Single Image.
+                    From an Image or a Prompt.
 
                 </h1>
 
                 <p class="hero-description">
 
-                    Upload any product photo and let Voluma automatically remove
-                    the background, generate a professional 3D model, preview it
-                    in your browser and download it as a GLB file.
+                    Upload any product photo, or simply describe what you want in words —
+                    Voluma automatically removes the background (for images), generates a
+                    professional 3D model, previews it in your browser, and lets you
+                    download it as a GLB file.
 
                 </p>
 
@@ -52,7 +53,7 @@
 
                     </a>
 
-                    <a href="#features" class="btn btn-secondary">
+                    <a href="#how" class="btn btn-secondary">
 
                         How It Works
 
@@ -64,7 +65,7 @@
 
                     <span>PNG / JPG</span>
 
-                    <span>remove.bg</span>
+                    <span>Text Prompt</span>
 
                     <span>Tripo AI</span>
 
@@ -86,9 +87,9 @@
 
                         <div>
 
-                            <h4>Upload Image</h4>
+                            <h4>Upload Image or Write a Prompt</h4>
 
-                            <p>Select any product photo</p>
+                            <p>Pick a product photo, or describe it in text</p>
 
                         </div>
 
@@ -155,57 +156,53 @@
 
 
 <section id="how" class="how-section">
+    
 
     <div class="container">
 
         <div class="section-heading">
 
             <span class="section-tag">
-                FLAT IN, DIMENSIONAL OUT
+                HOW IT WORKS
             </span>
 
             <h2>
-                From a plain photo to something
-                <br>
-                you can rotate.
+                Three steps. About a minute.
             </h2>
+
+            <p class="section-subtitle">
+                No 3D knowledge needed. If you can upload a photo or type a sentence, you can make a model.
+            </p>
 
         </div>
 
-        <div class="how-grid">
+        <div class="how-steps-grid">
 
-            <div class="how-card">
-
-                <span class="how-label">
-                    Your photo
-                </span>
-
-                <div class="how-image">
-
-                    📷
-
-                </div>
-
+            <div class="how-step-card">
+                <span class="how-step-number">01</span>
+                <div class="how-step-icon">📤</div>
+                <h3 class="how-step-title">Upload a photo or type a prompt</h3>
+                <p class="how-step-desc">
+                    Drop in a single image of your product, or simply describe it in words — a burger, a shoe, a bottle, anything.
+                </p>
             </div>
 
-            <div class="how-arrow">
-
-                →
-
+            <div class="how-step-card">
+                <span class="how-step-number">02</span>
+                <div class="how-step-icon">✂️</div>
+                <h3 class="how-step-title">We clean it up</h3>
+                <p class="how-step-desc">
+                    The background is stripped away automatically, so the model only captures your product.
+                </p>
             </div>
 
-            <div class="how-card active">
-
-                <span class="how-label">
-                    Your 3D model
-                </span>
-
-                <div class="how-image">
-
-                    🧊
-
-                </div>
-
+            <div class="how-step-card">
+                <span class="how-step-number">03</span>
+                <div class="how-step-icon">🧊</div>
+                <h3 class="how-step-title">Get your 3D model</h3>
+                <p class="how-step-desc">
+                    Spin it, view it from every angle, and download the file to use anywhere.
+                </p>
             </div>
 
         </div>
@@ -215,8 +212,6 @@
 </section>
 
 
-
-
 <section id="examples" class="examples-section">
 
     <div class="container">
@@ -224,17 +219,17 @@
         <div class="section-heading">
 
             <span class="section-tag">
-                AI GENERATED EXAMPLES
+                EXAMPLES
             </span>
 
             <h2>
-                See what your images
+                See what your images or words
                 become.
             </h2>
 
             <p class="section-subtitle">
-                Upload a single photo and receive a downloadable
-                3D model in minutes.
+                Upload a single photo, or just describe your idea in text,
+                and receive a downloadable 3D model in minutes.
             </p>
 
         </div>
@@ -283,23 +278,21 @@
 
             </div>
 
-            <!-- Example 2 -->
+            <!-- Example 2 (Text-to-3D) -->
 
             <div class="example-card">
 
-                <div class="example-box">
+                <div class="example-box example-box-text">
 
                     <span class="example-label">
 
-                        Your Photo
+                        Your Prompt
 
                     </span>
 
-                    <div class="example-image">
-
-                        🧴
-
-                    </div>
+                    <p class="example-prompt-text">
+                        "A cute cartoon fox sitting, orange fur, big eyes"
+                    </p>
 
                 </div>
 
@@ -319,7 +312,7 @@
 
                     <div class="example-image">
 
-                        🧊
+                        🦊
 
                     </div>
 
@@ -332,9 +325,6 @@
     </div>
 
 </section>
-
-
-
 
 
 <section id="credits" class="credits-section">
@@ -390,7 +380,7 @@
 
                     <li>✔ Automatic background removal</li>
 
-                    <li>✔ Personal gallery & history</li>
+                    <li>✔ Personal gallery </li>
 
                 </ul>
 
@@ -413,6 +403,8 @@
                 </div>
 
                 <ul>
+
+                    <li>✔ Works for both Image-to-3D and Text-to-3D</li>
 
                     <li>✔ Credits deducted only after success</li>
 

@@ -42,4 +42,8 @@ return [
         'key' => env('TRIPO_API_KEY'),
     ],
 
+    'convert3d' => [
+        'key' => env('CONVERT3D_API_KEY'),
+    ],
+
 ];

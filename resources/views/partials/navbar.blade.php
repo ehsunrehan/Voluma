@@ -9,7 +9,13 @@
                 <span class="logo-text">luma</span>
             </a>
 
-            <ul class="nav-links">
+            <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
 
     @guest
                 <li>
@@ -34,21 +40,26 @@
     @auth
         <li>
             <a href="{{ route('dashboard') }}">
-                Dashboard
+                Image-to-3D
             </a>
         </li>
 
         <li>
-            <a href="{{ route('history') }}">
-                Gallery
+            <a href="{{ route('text.dashboard') }}">
+                Text-to-3D
             </a>
         </li>
 
         <li>
-            <a href="{{ route('history') }}">
-                History
-            </a>
+            <a href="{{ route('gallery') }}">Gallery</a>
+            
         </li>
+
+        <li>
+            <a href="{{ route('convert.index') }}">Convert</a>
+
+        </li>
+
     @endauth
 
 </ul>
@@ -75,12 +86,18 @@
 
     <li>
         <a href="{{ route('dashboard') }}">
-            Dashboard
+            Image-to-3D
         </a>
     </li>
 
     <li>
-        <a href="{{ route('history') }}">
+        <a href="{{ route('text.dashboard') }}">
+            Text-to-3D
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ route('gallery') }}">
             Gallery
         </a>
     </li>

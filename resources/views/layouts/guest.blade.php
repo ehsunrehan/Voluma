@@ -8,6 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
+        <link rel="stylesheet" href="{{ asset('website/css/auth.css') }}">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
@@ -18,10 +19,36 @@
         @livewireStyles
     </head>
     <body>
-        <div class="font-sans text-gray-900 antialiased">
+        <div class="auth-page">
             {{ $slot }}
         </div>
 
         @livewireScripts
+
+        <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function checkValue(input) {
+            if (input.value.trim() !== '') {
+                input.classList.add('has-value');
+            } else {
+                input.classList.remove('has-value');
+            }
+        }
+
+        const inputs = document.querySelectorAll('.auth-field input');
+        inputs.forEach(function (input) {
+            checkValue(input);
+            input.addEventListener('input', function () { checkValue(input); });
+            input.addEventListener('change', function () { checkValue(input); });
+            input.addEventListener('animationstart', function (e) {
+                if (e.animationName === 'onAutoFillStart') checkValue(input);
+            });
+        });
+
+        setInterval(function () {
+            inputs.forEach(function (input) { checkValue(input); });
+        }, 300);
+    });
+</script>
     </body>
 </html>

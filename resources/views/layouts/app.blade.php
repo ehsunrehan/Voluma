@@ -35,7 +35,7 @@
     </div>
 
     @livewireScripts
-    <script src="{{ asset('website/js/app.js') }}"></script>
+    
     <script src="{{ asset('website/js/navbar.js') }}"></script>
     @stack('scripts')
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"> </script>
