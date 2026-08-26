@@ -492,23 +492,35 @@ public function gallery()
 public function generateFromText(Request $request)
 {
     $request->validate([
-        'prompt' => 'required|string|max:500'
+        'prompt' => 'required|string|max:2000'
+    ], [
+        'prompt.max' => 'Your description is too long. Please keep it under 2000 characters.'
     ]);
+
+    $cleanPrompt = preg_replace('/[#*_`>]/', '', $request->prompt);
+    $cleanPrompt = preg_replace('/\s+/', ' ', $cleanPrompt);
+    $cleanPrompt = trim($cleanPrompt);
+    $cleanPrompt = mb_substr($cleanPrompt, 0, 500);
 
     $generate = Http::withToken(env('TRIPO_API_KEY'))
         ->post('https://api.tripo3d.ai/v2/openapi/task', [
             "type" => "text_to_model",
             "model_version" => "v3.1-20260211",
-            "prompt" => $request->prompt
+            "prompt" => $cleanPrompt
         ]);
 
     $generateData = $generate->json();
 
     if (!isset($generateData['data']['task_id'])) {
+        \Log::error('Tripo text_to_model failed:', [
+            'sent_prompt' => $cleanPrompt,
+            'prompt_length' => mb_strlen($cleanPrompt),
+            'tripo_response' => $generateData,
+        ]);
+
         return response()->json([
             'success' => false,
-            'generate' => $generateData,
-            'debug_sent_prompt' => $request->prompt,
+            'message' => $generateData['message'] ?? 'Could not generate model. Please simplify your description and try again.',
         ], 500);
     }
 
@@ -518,7 +530,7 @@ public function generateFromText(Request $request)
         'user_id' => auth()->id(),
         'task_id' => $taskId,
         'source_type' => 'text',
-        'prompt' => $request->prompt,
+        'prompt' => $cleanPrompt,
         'original_image' => null,
         'thumbnail' => null,
         'status' => 'processing',

@@ -68,13 +68,14 @@ document.addEventListener('DOMContentLoaded', function () {
             modelViewer.style.filter = "blur(8px)";
 
             fetch('/generate/text-model', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({ prompt: prompt })
-            })
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify({ prompt: prompt })
+})
                 .then(res => res.json())
                 .then(data => {
 
